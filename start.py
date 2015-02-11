@@ -1,21 +1,32 @@
 #!/usr/bin/env python2.7
 
-import gtk
+import sys
+try:
+    import gtk
+except:
+    print "Cannot import gtk. Please be sure that your PYTHONPATH is set correctly"
+    sys.exit(1)
 
 def button_clicked(button):
     print "Hello world"
 
+class MainWindow(gtk.Window):
+    def __init__(self):
+        gtk.Window.__init__(self)
+        self.button = gtk.Button(label="Click here")
+        self.button.connect("clicked", self.on_button_clicked)
+        self.add(self.button)
+
+    def on_button_clicked(self, widget):
+        print "Hello world!"
+
 def main():
-    window = gtk.Window()
+    window = MainWindow()
     window.set_default_size(240, 100)
     window.set_title("Hello world app")
     window.connect('destroy', lambda w: gtk.main_quit())
     
-    button = gtk.Button("Press me")
-    button.connect('clicked',button_clicked)
-    button.show()
-
-    window.add(button)
+    window.show_all()
     window.present()
     
     gtk.main()
