@@ -11,7 +11,7 @@ class UIManagerExample:
         # Create the toplevel window
         window = gtk.Window()
         window.connect('destroy', lambda w: gtk.main_quit())
-        window.set_size_request(300, -1)
+        window.set_size_request(800,600)
         vbox = gtk.VBox()
         window.add(vbox)
 
@@ -87,5 +87,5 @@ class UIManagerExample:
         gtk.main_quit()
 
 if __name__ == '__main__':
-    ba = UIManagerExample()
+    UIManagerExample()
     gtk.main()
