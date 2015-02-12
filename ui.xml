@@ -1,0 +1,26 @@
+<ui>
+    <menubar name="MenuBar">
+      <menu action="File">
+        <menuitem action="Quit"/>
+      </menu>
+      <menu action="Sound">
+        <menuitem action="Mute"/>
+      </menu>
+      <menu action="RadioBand">
+        <menuitem action="AM"/>
+        <menuitem action="FM"/>
+        <menuitem action="SSB"/>
+      </menu>
+    </menubar>
+    <toolbar name="Toolbar">
+      <toolitem action="Quit"/>
+      <separator/>
+      <toolitem action="Mute"/>
+      <separator/>
+      <placeholder name="RadioBandItems">
+        <toolitem action="AM"/>
+        <toolitem action="FM"/>
+        <toolitem action="SSB"/>
+      </placeholder>
+    </toolbar>
+</ui>
