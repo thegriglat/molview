@@ -30,16 +30,16 @@ class UIManagerExample:
         actiongroup.add_actions([('Quit', gtk.STOCK_QUIT, '_Quit me!', None,
                                   'Quit the Program', self.quit_cb),
                                  ('File', None, '_File'),
-                                 ('New' , None, '_New'),
-                                 ('Open', None, '_Open'),
-                                 ('Export', None, '_Export'),
-                                 ('Settings', None, '_Settings'),
+                                 ('New' , gtk.STOCK_NEW, '_New'),
+                                 ('Open', gtk.STOCK_OPEN, '_Open'),
+                                 ('Export', gtk.STOCK_SAVE, '_Export'),
+                                 ('Settings', gtk.STOCK_EXECUTE, '_Settings'),
                                  ('Help' , None, '_Help'),
-                                 ('Up' , None, '_Up'),
-                                 ('Down' , None, '_Down'),
-                                 ('Right' , None, '_Right'),
-                                 ('Left' , None, '_Left'),
-                                 ('About', None, '_About')])
+                                 ('Up' , gtk.STOCK_GO_UP, '_Up'),
+                                 ('Down' , gtk.STOCK_GO_DOWN, '_Down'),
+                                 ('Right' , gtk.STOCK_GO_FORWARD, '_Right'),
+                                 ('Left' , gtk.STOCK_GO_BACK, '_Left'),
+                                 ('About', gtk.STOCK_HELP, '_About')])
         actiongroup.get_action('Quit').set_property('short-label', '_Quit')
 
         # Add the actiongroup to the uimanager
