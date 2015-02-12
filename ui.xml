@@ -1,26 +1,24 @@
 <ui>
     <menubar name="MenuBar">
       <menu action="File">
+        <menuitem action="New"/>
+        <menuitem action="Open"/>
+        <menuitem action="Export"/>
+        <menuitem action="Settings"/>
         <menuitem action="Quit"/>
       </menu>
-      <menu action="Sound">
-        <menuitem action="Mute"/>
-      </menu>
-      <menu action="RadioBand">
-        <menuitem action="AM"/>
-        <menuitem action="FM"/>
-        <menuitem action="SSB"/>
+      <menu action="Help">
+        <menuitem action="Help"/>
+        <menuitem action="About"/>
       </menu>
     </menubar>
     <toolbar name="Toolbar">
-      <toolitem action="Quit"/>
+      <toolitem action="New"/>
+      <toolitem action="Open"/>
       <separator/>
-      <toolitem action="Mute"/>
-      <separator/>
-      <placeholder name="RadioBandItems">
-        <toolitem action="AM"/>
-        <toolitem action="FM"/>
-        <toolitem action="SSB"/>
-      </placeholder>
+        <toolitem action="Up"/>
+        <toolitem action="Down"/>
+        <toolitem action="Right"/>
+        <toolitem action="Left"/>
     </toolbar>
 </ui>
