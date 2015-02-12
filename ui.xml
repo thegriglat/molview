@@ -8,7 +8,6 @@
         <menuitem action="Quit"/>
       </menu>
       <menu action="Help">
-        <menuitem action="Help"/>
         <menuitem action="About"/>
       </menu>
     </menubar>
