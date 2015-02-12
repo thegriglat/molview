@@ -3,6 +3,7 @@
 import pygtk
 pygtk.require('2.0')
 import gtk
+import math
 
 class UIManagerExample:
       
@@ -58,10 +59,28 @@ class UIManagerExample:
         # Create and pack two Labels
         drawingarea = gtk.DrawingArea()
         self.drawingarea = drawingarea
+        drawingarea.connect("expose-event", self.expose)
         vbox.pack_start(drawingarea)
 
         window.show_all()
         return
+
+    def expose(self, widget, event):
+
+        cr = widget.window.cairo_create()
+
+        cr.set_line_width(9)
+        cr.set_source_rgb(0.7, 0.2, 0.0)
+                
+        w = widget.allocation.width
+        h = widget.allocation.height
+
+        cr.translate(w/2, h/2)
+        cr.arc(0, 0, 50, 0, 2*math.pi)
+        cr.stroke_preserve()
+        
+        cr.set_source_rgb(0.3, 0.4, 0.6)
+        cr.fill()
 
     def quit_cb(self, b):
         print 'Quitting program'
