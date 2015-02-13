@@ -3,7 +3,7 @@
 import pygtk
 pygtk.require('2.0')
 import gtk
-import math
+from structure import *
 
 class MolViewUI:
     x, y = 0, 0      
@@ -67,9 +67,25 @@ class MolViewUI:
                             | gtk.gdk.POINTER_MOTION_HINT_MASK)
         drawingarea.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse("white"))
         vbox.pack_start(drawingarea)
-
+        
+        # Move buttons        
+        upbutton = uimanager.get_widget("/Toolbar/Up")
+        downbutton = uimanager.get_widget("/Toolbar/Down")
+        rightbutton = uimanager.get_widget("/Toolbar/Right")
+        leftbutton = uimanager.get_widget("/Toolbar/Left")
+        upbutton.connect("clicked"   , self.moveImage, None, "y", -10)
+        downbutton.connect("clicked" , self.moveImage, None, "y", +10)
+        rightbutton.connect("clicked", self.moveImage, None, "x", +10)
+        leftbutton.connect("clicked" , self.moveImage, None, "x", -10)
         window.show_all()
         return
+
+    def moveImage(self, widget, event, dim, delta):
+        if dim == "y":
+            self.y += delta
+        elif dim == "x":
+            self.x += delta
+        return True
 
     def repaint(self, widget):
         widget.queue_clear()
@@ -78,8 +94,8 @@ class MolViewUI:
         cr.set_line_width(9)
         cr.set_source_rgb(0.7, 0.2, 0.0)
                 
-        w = widget.allocation.width
-        h = widget.allocation.height
+        self.width  = widget.allocation.width
+        self.height = widget.allocation.height
 
         cr.translate(self.x ,self.y)
         cr.arc(0, 0, 50, 0, 2*math.pi)
@@ -96,7 +112,6 @@ class MolViewUI:
         gtk.main_quit()
 
     def move_arc(self, widget, x, y):
-        print (x,y)
         self.x = x
         self.y = y
         self.repaint(widget)
