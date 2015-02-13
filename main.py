@@ -3,7 +3,9 @@
 import pygtk
 pygtk.require('2.0')
 import gtk
+import math
 from structure import *
+
 
 class MolViewUI:
     x, y = 0, 0      
@@ -91,14 +93,16 @@ class MolViewUI:
         widget.queue_clear()
         cr = widget.window.cairo_create()
         self.cr = cr
-        cr.set_line_width(9)
+        cr.translate(self.x ,self.y)
         cr.set_source_rgb(0.7, 0.2, 0.0)
+        for (coord, radius) in s.to2D():
+            cr.arc(10 * coord[0],10 * coord[1], 5* radius, 0, 2 * math.pi)
+#        cr.set_line_width(9)
                 
         self.width  = widget.allocation.width
         self.height = widget.allocation.height
 
-        cr.translate(self.x ,self.y)
-        cr.arc(0, 0, 50, 0, 2*math.pi)
+#        cr.arc(0, 0, 50, 0, 2*math.pi)
         cr.stroke_preserve()
         
         cr.set_source_rgb(0.3, 0.4, 0.6)
@@ -132,4 +136,6 @@ class MolViewUI:
 
 if __name__ == '__main__':
     MolViewUI()
+    s = Structure()
+    s.read_from_file("butadiene.dat")
     gtk.main()
