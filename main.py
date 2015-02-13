@@ -81,8 +81,13 @@ class MolViewUI:
         downbutton.connect("clicked" , self.moveImage, None, "y", +1 * math.pi / 12)
         rightbutton.connect("clicked", self.moveImage, None, "x", +1 * math.pi / 12)
         leftbutton.connect("clicked" , self.moveImage, None, "x", -1 * math.pi / 12)
+        
+        # Menu buttons
         newbutton = uimanager.get_widget("/Toolbar/New")
         newbutton.connect("clicked", self.cleanStructure, None)
+        menunewbutton = uimanager.get_widget("/MenuBar/File/New")
+        menunewbutton.connect("activate", self.cleanStructure, None)
+
         window.show_all()
         return
 
