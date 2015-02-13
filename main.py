@@ -5,7 +5,7 @@ pygtk.require('2.0')
 import gtk
 import math
 
-class UIManagerExample:
+class MolViewUI:
       
     def __init__(self):
         # Create the toplevel window
@@ -23,7 +23,7 @@ class UIManagerExample:
         window.add_accel_group(accelgroup)
 
         # Create an ActionGroup
-        actiongroup = gtk.ActionGroup('UIManagerExample')
+        actiongroup = gtk.ActionGroup('MolViewUI')
         self.actiongroup = actiongroup
 
         # Create actions
@@ -87,5 +87,5 @@ class UIManagerExample:
         gtk.main_quit()
 
 if __name__ == '__main__':
-    UIManagerExample()
+    MolViewUI()
     gtk.main()
