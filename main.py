@@ -6,7 +6,7 @@ import gtk
 import math
 
 class MolViewUI:
-      
+    x, y = 0, 0      
     def __init__(self):
         # Create the toplevel window
         window = gtk.Window()
@@ -59,32 +59,61 @@ class MolViewUI:
         drawingarea = gtk.DrawingArea()
         self.drawingarea = drawingarea
         drawingarea.connect("expose-event", self.expose)
+        drawingarea.connect("motion_notify_event", self.rotateCamera)
+        drawingarea.set_events(gtk.gdk.EXPOSURE_MASK
+                            | gtk.gdk.LEAVE_NOTIFY_MASK
+                            | gtk.gdk.BUTTON_PRESS_MASK
+                            | gtk.gdk.POINTER_MOTION_MASK
+                            | gtk.gdk.POINTER_MOTION_HINT_MASK)
         drawingarea.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse("white"))
         vbox.pack_start(drawingarea)
 
         window.show_all()
         return
 
-    def expose(self, widget, event):
-
+    def repaint(self, widget):
+        widget.queue_clear()
         cr = widget.window.cairo_create()
-
+        self.cr = cr
         cr.set_line_width(9)
         cr.set_source_rgb(0.7, 0.2, 0.0)
                 
         w = widget.allocation.width
         h = widget.allocation.height
 
-        cr.translate(w/2, h/2)
+        cr.translate(self.x ,self.y)
         cr.arc(0, 0, 50, 0, 2*math.pi)
         cr.stroke_preserve()
         
         cr.set_source_rgb(0.3, 0.4, 0.6)
         cr.fill()
 
+    def expose(self, widget, event):
+        self.repaint(widget)
+
     def quit_cb(self, b):
         print 'Quitting program'
         gtk.main_quit()
+
+    def move_arc(self, widget, x, y):
+        print (x,y)
+        self.x = x
+        self.y = y
+        self.repaint(widget)
+        return True
+        
+
+    def rotateCamera(self, widget, event):
+        if event.is_hint:
+            x, y, state = event.window.get_pointer()
+        else:
+            x = event.x
+            y = event.y
+            state = event.state
+        if state & gtk.gdk.BUTTON1_MASK:
+            self.move_arc(widget, x, y)
+        return True
+
 
 if __name__ == '__main__':
     MolViewUI()
