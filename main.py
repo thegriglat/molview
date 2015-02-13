@@ -112,7 +112,6 @@ class MolViewUI:
         self.repaint(widget)
 
     def quit_cb(self, b):
-        print 'Quitting program'
         gtk.main_quit()
 
     def move_arc(self, widget, x, y):
@@ -122,7 +121,6 @@ class MolViewUI:
         if y != self.y:
             dy = y - self.y
         self.phi += dx * math.pi / 180
-        print self.phi
         self.x = x
         self.y = y
         self.repaint(widget)
@@ -143,5 +141,5 @@ class MolViewUI:
 if __name__ == '__main__':
     MolViewUI()
     s = Structure()
-    s.read_from_file("butadiene.dat")
+    s.read_from_file("ethane.dat")
     gtk.main()
