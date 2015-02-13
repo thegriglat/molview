@@ -91,7 +91,6 @@ class MolViewUI:
         return True
 
     def repaint(self, widget):
-        widget.queue_clear()
         width  = widget.allocation.width
         height = widget.allocation.height
         for (coord, radius) in s.to2D(self.xoy):
@@ -118,7 +117,7 @@ class MolViewUI:
         self.xoy += dy * math.pi / 180
         self.x = x
         self.y = y
-        self.repaint(widget)
+        widget.queue_draw()
         
 
     def rotateCamera(self, widget, event):
@@ -130,7 +129,6 @@ class MolViewUI:
             state = event.state
         if state & gtk.gdk.BUTTON1_MASK:
             self.doRotate(widget, x, y)
-        return True
 
 
 if __name__ == '__main__':
