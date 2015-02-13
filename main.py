@@ -9,7 +9,7 @@ from structure import *
 
 class MolViewUI:
     x, y = 0, 0      
-    phi = 0
+    xoy = 0
     def __init__(self):
         # Create the toplevel window
         window = gtk.Window()
@@ -94,20 +94,15 @@ class MolViewUI:
         widget.queue_clear()
         width  = widget.allocation.width
         height = widget.allocation.height
-        for (coord, radius) in s.to2D(self.phi):
+        for (coord, radius) in s.to2D(self.xoy):
             cr = widget.window.cairo_create()
-            cr.translate(width/2 ,height / 2)
+            cr.translate(width / 2 ,height / 2)
             cr.arc(100 * coord[0],100 * coord[1], 5* radius, 0, 2 * math.pi)
             cr.set_source_rgb(0.7, 0.2, 0.0)
             cr.stroke_preserve()
             cr.set_source_rgb(0.3, 0.4, 0.6)
             cr.fill()
-#        cr.set_line_width(9)
                 
-
-#        cr.arc(0, 0, 50, 0, 2*math.pi)
-        
-
     def expose(self, widget, event):
         self.repaint(widget)
 
@@ -120,7 +115,7 @@ class MolViewUI:
             dx = x - self.x
         if y != self.y:
             dy = y - self.y
-        self.phi += dx * math.pi / 180
+        self.xoy += dy * math.pi / 180
         self.x = x
         self.y = y
         self.repaint(widget)
