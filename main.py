@@ -114,7 +114,7 @@ class MolViewUI:
     def quit_cb(self, b):
         gtk.main_quit()
 
-    def move_arc(self, widget, x, y):
+    def doRotate(self, widget, x, y):
         dx, dy = 0, 0
         if x != self.x:
             dx = x - self.x
@@ -134,7 +134,7 @@ class MolViewUI:
             y = event.y
             state = event.state
         if state & gtk.gdk.BUTTON1_MASK:
-            self.move_arc(widget, x, y)
+            self.doRotate(widget, x, y)
         return True
 
 
