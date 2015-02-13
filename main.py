@@ -90,7 +90,7 @@ class MolViewUI:
             self.x += delta
         return True
 
-    def repaint(self, widget):
+    def expose(self, widget, event):
         width  = widget.allocation.width
         height = widget.allocation.height
         for (coord, radius) in s.to2D(self.xoy):
@@ -102,9 +102,6 @@ class MolViewUI:
             cr.set_source_rgb(0.3, 0.4, 0.6)
             cr.fill()
                 
-    def expose(self, widget, event):
-        self.repaint(widget)
-
     def quit_cb(self, b):
         gtk.main_quit()
 
