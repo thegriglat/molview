@@ -9,6 +9,7 @@ from structure import *
 
 class MolViewUI:
     x, y = 0, 0      
+    phi = 0
     def __init__(self):
         # Create the toplevel window
         window = gtk.Window()
@@ -91,22 +92,21 @@ class MolViewUI:
 
     def repaint(self, widget):
         widget.queue_clear()
-        cr = widget.window.cairo_create()
-        self.cr = cr
-        cr.translate(self.x ,self.y)
-        cr.set_source_rgb(0.7, 0.2, 0.0)
-        for (coord, radius) in s.to2D():
-            cr.arc(10 * coord[0],10 * coord[1], 5* radius, 0, 2 * math.pi)
+        width  = widget.allocation.width
+        height = widget.allocation.height
+        for (coord, radius) in s.to2D(self.phi):
+            cr = widget.window.cairo_create()
+            cr.translate(width/2 ,height / 2)
+            cr.arc(100 * coord[0],100 * coord[1], 5* radius, 0, 2 * math.pi)
+            cr.set_source_rgb(0.7, 0.2, 0.0)
+            cr.stroke_preserve()
+            cr.set_source_rgb(0.3, 0.4, 0.6)
+            cr.fill()
 #        cr.set_line_width(9)
                 
-        self.width  = widget.allocation.width
-        self.height = widget.allocation.height
 
 #        cr.arc(0, 0, 50, 0, 2*math.pi)
-        cr.stroke_preserve()
         
-        cr.set_source_rgb(0.3, 0.4, 0.6)
-        cr.fill()
 
     def expose(self, widget, event):
         self.repaint(widget)
@@ -116,10 +116,16 @@ class MolViewUI:
         gtk.main_quit()
 
     def move_arc(self, widget, x, y):
+        dx, dy = 0, 0
+        if x != self.x:
+            dx = x - self.x
+        if y != self.y:
+            dy = y - self.y
+        self.phi += dx * math.pi / 180
+        print self.phi
         self.x = x
         self.y = y
         self.repaint(widget)
-        return True
         
 
     def rotateCamera(self, widget, event):
