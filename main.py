@@ -10,6 +10,7 @@ from structure import *
 class MolViewUI:
     x, y = 0, 0      
     xoy = 0
+    xoz = 0
     def __init__(self):
         # Create the toplevel window
         window = gtk.Window()
@@ -76,19 +77,19 @@ class MolViewUI:
         downbutton = uimanager.get_widget("/Toolbar/Down")
         rightbutton = uimanager.get_widget("/Toolbar/Right")
         leftbutton = uimanager.get_widget("/Toolbar/Left")
-        upbutton.connect("clicked"   , self.moveImage, None, "y", -10)
-        downbutton.connect("clicked" , self.moveImage, None, "y", +10)
-        rightbutton.connect("clicked", self.moveImage, None, "x", +10)
-        leftbutton.connect("clicked" , self.moveImage, None, "x", -10)
+        upbutton.connect("clicked"   , self.moveImage, None, "y", -1 * math.pi / 12)
+        downbutton.connect("clicked" , self.moveImage, None, "y", +1 * math.pi / 12)
+        rightbutton.connect("clicked", self.moveImage, None, "x", +1 * math.pi / 12)
+        leftbutton.connect("clicked" , self.moveImage, None, "x", -1 * math.pi / 12)
         window.show_all()
         return
 
     def moveImage(self, widget, event, dim, delta):
         if dim == "y":
-            self.y += delta
+            self.xoy += delta
         elif dim == "x":
-            self.x += delta
-        return True
+            self.xoz += delta
+        self.drawingarea.queue_draw()
 
     def expose(self, widget, event):
         width  = widget.allocation.width
