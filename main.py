@@ -81,8 +81,15 @@ class MolViewUI:
         downbutton.connect("clicked" , self.moveImage, None, "y", +1 * math.pi / 12)
         rightbutton.connect("clicked", self.moveImage, None, "x", +1 * math.pi / 12)
         leftbutton.connect("clicked" , self.moveImage, None, "x", -1 * math.pi / 12)
+        newbutton = uimanager.get_widget("/Toolbar/New")
+        newbutton.connect("clicked", self.cleanStructure, None)
         window.show_all()
         return
+
+    def cleanStructure(self, widget, event):
+        global s
+        s = Structure()
+        self.drawingarea.queue_draw()
 
     def moveImage(self, widget, event, dim, delta):
         if dim == "y":
