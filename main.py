@@ -56,10 +56,10 @@ class UIManagerExample:
         toolbar = uimanager.get_widget('/Toolbar')
         vbox.pack_start(toolbar, False)
 
-        # Create and pack two Labels
         drawingarea = gtk.DrawingArea()
         self.drawingarea = drawingarea
         drawingarea.connect("expose-event", self.expose)
+        drawingarea.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse("white"))
         vbox.pack_start(drawingarea)
 
         window.show_all()
