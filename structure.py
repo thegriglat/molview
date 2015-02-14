@@ -34,3 +34,8 @@ class Atom:
         zphi = self.xyz[2] * math.cos(math.pi/2 - phi)
         #return ((xphi, yphi, zphi), self.radius)
         return ((xphi, zphi), self.radius)
+
+def matMul(a, b):
+    zip_b = zip(*b)
+    return [[sum(ele_a*ele_b for ele_a, ele_b in zip(row_a, col_b)) 
+             for col_b in zip_b] for row_a in a]
