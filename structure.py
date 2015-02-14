@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
-import math
+from math import *
 from data import *
 
 class Structure:
     def __init__(self):
         self.atoms = []
         self.bonds = []
-    def to2D(self, phi = 0):
-        return [a.to2D(phi) for a in self.atoms]
+    def to2D(self, phi = 0, psi = 0):
+        return [a.to2D(phi, psi) for a in self.atoms]
             
     def read_from_file(self, filename, filetype = "xyz"):
         if filetype == "xyz":
@@ -28,12 +28,23 @@ class Atom:
         self.xyz = [0.0, 0.0, 0.0]
         self.label = ""
         self.radius = 1.0
-    def to2D(self, phi = 0):
-        xphi = self.xyz[0] * math.cos(phi)
-        yphi = self.xyz[1] 
-        zphi = self.xyz[2] * math.cos(math.pi/2 - phi)
+    def to2D(self, phi = 0, psi = 0):
+        oldxyz = [[self.xyz[0]], [self.xyz[1]], [self.xyz[2]]]
+        rotate1 = [
+            [1,           0,        0],
+            [0,    cos(phi), sin(phi)],
+            [0, -1*sin(phi), cos(phi)]
+                  ]
+        rotate2 = [
+            [cos(psi), 0, -1*sin(psi)],
+            [       0, 1,           0],
+            [sin(psi), 0,    cos(psi)]
+                  ]
+        xyz_new = matMul(matMul(rotate1, rotate2), oldxyz)
+        xnew = xyz_new[0][0]
+        ynew = xyz_new[1][0]
         #return ((xphi, yphi, zphi), self.radius)
-        return ((xphi, zphi), self.radius)
+        return ((xnew, ynew), self.radius)
 
 def matMul(a, b):
     zip_b = zip(*b)

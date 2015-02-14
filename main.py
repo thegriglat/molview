@@ -106,7 +106,7 @@ class MolViewUI:
     def expose(self, widget, event):
         width  = widget.allocation.width
         height = widget.allocation.height
-        for (coord, radius) in s.to2D(self.xoy):
+        for (coord, radius) in s.to2D(self.xoy, self.xoz):
             cr = widget.window.cairo_create()
             cr.translate(width / 2 ,height / 2)
             cr.arc(100 * coord[0],100 * coord[1], 5* radius, 0, 2 * math.pi)
@@ -125,6 +125,7 @@ class MolViewUI:
         if y != self.y:
             dy = y - self.y
         self.xoy += dy * math.pi / 180
+        self.xoz += dx * math.pi / 180
         self.x = x
         self.y = y
         widget.queue_draw()
