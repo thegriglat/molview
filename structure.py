@@ -11,6 +11,7 @@ class Structure:
         return [a.to2D(phi, psi) for a in self.atoms]
             
     def read_from_file(self, filename, filetype = "xyz"):
+        self.__init__()
         if filetype == "xyz":
             f = open(filename)
             for l in f.readlines():

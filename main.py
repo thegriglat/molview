@@ -87,9 +87,40 @@ class MolViewUI:
         newbutton.connect("clicked", self.cleanStructure, None)
         menunewbutton = uimanager.get_widget("/MenuBar/File/New")
         menunewbutton.connect("activate", self.cleanStructure, None)
+        openbutton = uimanager.get_widget("/Toolbar/Open")
+        menuopenbutton = uimanager.get_widget("/MenuBar/File/Open")
+        openbutton.connect('clicked', self.openFileDialog, None)
+        menuopenbutton.connect("activate", self.openFileDialog, None)
 
         window.show_all()
         return
+
+    def openFileDialog(self, widget, event):
+        dialog = gtk.FileChooserDialog("Open file ...",
+                                       None,
+                                       gtk.FILE_CHOOSER_ACTION_OPEN,
+                                       (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                        gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+        dialog.set_default_response(gtk.RESPONSE_OK)
+
+        filter = gtk.FileFilter()
+        filter.set_name("XYZ files")
+        filter.add_pattern("*.xyz")
+        dialog.add_filter(filter)
+
+        filter = gtk.FileFilter()
+        filter.set_name("All files")
+        filter.add_pattern("*")
+        dialog.add_filter(filter)
+
+        response = dialog.run()
+        if response == gtk.RESPONSE_OK:
+            s.read_from_file(dialog.get_filename())
+            self.drawingarea.queue_draw()
+        elif response == gtk.RESPONSE_CANCEL:
+            print 'No files selected'
+        dialog.destroy()
+        return True
 
     def cleanStructure(self, widget, event):
         global s
