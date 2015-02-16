@@ -91,9 +91,37 @@ class MolViewUI:
         menuopenbutton = uimanager.get_widget("/MenuBar/File/Open")
         openbutton.connect('clicked', self.openFileDialog, None)
         menuopenbutton.connect("activate", self.openFileDialog, None)
+        exportbutton = uimanager.get_widget("/MenuBar/File/Export")
+        exportbutton.connect("activate", self.saveFileDialog, None)
 
         window.show_all()
         return
+    def saveFileDialog(self, widget, event):
+        def exportAsPNG(drawable, filename):
+            colormap = drawable.get_colormap()
+            pixbuf = gtk.gdk.Pixbuf(gtk.gdk.COLORSPACE_RGB, 0, 8, *drawable.get_size())
+            pixbuf = pixbuf.get_from_drawable(drawable, colormap, 0,0,0,0, *drawable.get_size())
+            pixbuf.save(filename, 'png')
+
+        dialog = gtk.FileChooserDialog("Save file in png format ...",
+                                       None,
+                                       gtk.FILE_CHOOSER_ACTION_SAVE,
+                                       (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                        gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+        dialog.set_default_response(gtk.RESPONSE_OK)
+
+        filter = gtk.FileFilter()
+        filter.set_name("PNG files")
+        filter.add_pattern("*.png")
+        dialog.add_filter(filter)
+
+        response = dialog.run()
+        if response == gtk.RESPONSE_OK:
+            exportAsPNG(self.drawingarea.window, dialog.get_filename())
+        elif response == gtk.RESPONSE_CANCEL:
+            print 'No file saved'
+        dialog.destroy()
+        return True
 
     def openFileDialog(self, widget, event):
         dialog = gtk.FileChooserDialog("Open file ...",
