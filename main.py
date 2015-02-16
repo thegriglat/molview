@@ -71,9 +71,19 @@ class MolViewUI:
                             | gtk.gdk.POINTER_MOTION_MASK
                             | gtk.gdk.POINTER_MOTION_HINT_MASK)
         drawingarea.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse("white"))
+
+        scale = gtk.HScale(gtk.Adjustment(value = 1,
+                                           lower = 0.1,
+                                           upper = 11,
+                                           step_incr = 0.1,
+                                           page_incr = 0.1,
+                                           page_size = 1))
+            
+        self.scale = scale
+        vbox.pack_start(scale, False, False)
         vbox.pack_start(drawingarea)
         
-        # Move buttons        
+        # Move buttons
         upbutton = uimanager.get_widget("/Toolbar/Up")
         downbutton = uimanager.get_widget("/Toolbar/Down")
         rightbutton = uimanager.get_widget("/Toolbar/Right")
@@ -94,7 +104,6 @@ class MolViewUI:
         menuopenbutton.connect("activate", self.openFileDialog, None)
         exportbutton = uimanager.get_widget("/MenuBar/File/Export")
         exportbutton.connect("activate", self.saveFileDialog, None)
-
         window.show_all()
         return
     def saveFileDialog(self, widget, event):
