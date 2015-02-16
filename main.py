@@ -36,7 +36,7 @@ class MolViewUI:
                                  ('File', None, '_File'),
                                  ('New' , gtk.STOCK_NEW, '_New'),
                                  ('Open', gtk.STOCK_OPEN, '_Open'),
-                                 ('Export', gtk.STOCK_SAVE, '_Export'),
+                                 ('Export', gtk.STOCK_SAVE, '_Save as PNG'),
                                  ('Settings', gtk.STOCK_EXECUTE, '_Settings'),
                                  ('Help' , None, '_Help'),
                                  ('Up' , gtk.STOCK_GO_UP, '_Up'),
