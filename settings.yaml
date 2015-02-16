@@ -1,0 +1,14 @@
+atoms:
+  C:
+    radius: 0.77
+    color:
+      red: 1
+      green: 1
+      blue: 0
+  H:
+    radius: 0.32
+    color:
+      red: 0.75
+      green: 0.75
+      blue: 0.75
+bonds:

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 from math import *
-from data import *
+from settings import *
+import main
 
 class Structure:
     def __init__(self):
@@ -9,7 +10,7 @@ class Structure:
         self.bonds = []
     def to2D(self, phi = 0, psi = 0):
         # sort by Z axis
-        return sorted([a.to2D(phi, psi) for a in self.atoms], key = lambda test: test[0][2])
+        return sorted([a.to2D(phi, psi) for a in self.atoms], key = lambda test: test[1][2])
         
     def read_from_file(self, filename, filetype = "xyz"):
         self.__init__()
@@ -21,7 +22,7 @@ class Structure:
                 a = Atom()
                 a.xyz = [float(x), float(y), float(z)]
                 a.label = label
-                a.radius = data["atoms"]["radius"][label]
+                a.radius = main.Settings.settings["atoms"][label]["radius"]
                 self.atoms.append(a)
                 del a
 
@@ -44,7 +45,7 @@ class Atom:
             [sin(psi), 0,    cos(psi)]
                   ]
         xyz_new = matMul(matMul(rotate1, rotate2), oldxyz)
-        return ((xyz_new[0][0], xyz_new[1][0], xyz_new[2][0]), self.radius)
+        return (self.label, (xyz_new[0][0], xyz_new[1][0], xyz_new[2][0]), self.radius)
 
 def matMul(a, b):
     zip_b = zip(*b)

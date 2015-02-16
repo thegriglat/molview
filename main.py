@@ -5,6 +5,7 @@ pygtk.require('2.0')
 import gtk
 import math
 from structure import *
+from data import *
 
 
 class MolViewUI:
@@ -165,13 +166,15 @@ class MolViewUI:
     def expose(self, widget, event):
         width  = widget.allocation.width
         height = widget.allocation.height
-        for (coord, radius) in s.to2D(self.xoy, self.xoz):
+        for (label, coord, radius) in s.to2D(self.xoy, self.xoz):
             cr = widget.window.cairo_create()
             cr.translate(width / 2 ,height / 2)
             cr.arc(100 * coord[0],100 * coord[1], 5* radius, 0, 2 * math.pi)
-            cr.set_source_rgb(0.7, 0.2, 0.0)
+            cr.set_source_rgb(Settings.settings["atoms"][label]["color"]["red"],
+                              Settings.settings["atoms"][label]["color"]["green"],
+                              Settings.settings["atoms"][label]["color"]["blue"]
+                             )
             cr.stroke_preserve()
-            cr.set_source_rgb(0.3, 0.4, 0.6)
             cr.fill()
                 
     def quit_cb(self, b):
@@ -200,6 +203,8 @@ class MolViewUI:
         if state & gtk.gdk.BUTTON1_MASK:
             self.doRotate(widget, x, y)
 
+
+Settings = Settings("settings.yaml")
 
 if __name__ == '__main__':
     MolViewUI()
