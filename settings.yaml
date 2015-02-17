@@ -1,5 +1,5 @@
 app:
-  autoscale: False
+  autoscale: True
   autocentralize: True
 atoms:
   C:

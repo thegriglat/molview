@@ -242,6 +242,17 @@ class MolViewUI:
       window.show_all()
 
     def scaleStructure(self, widget, event, scale):
+      if widget.get_value() > 0.9 * widget.get_adjustment().get_upper():
+          adj = widget.get_adjustment()
+          adj.set_upper(adj.get_upper() + 1)
+          widget.set_adjustment(adj)
+          del adj
+      elif widget.get_value() < 0.1 * widget.get_adjustment().get_upper():
+          adj = widget.get_adjustment()
+          adj.set_upper(adj.get_upper() * 0.9)
+          widget.set_adjustment(adj)
+          del adj
+
       self.scaleFactor = float(widget.get_value())
       self.drawingarea.queue_draw()
 
@@ -251,8 +262,4 @@ Settings = Settings("settings.yaml")
 if __name__ == '__main__':
     MolViewUI = MolViewUI()
     s = Structure()
-    s.read_from_file("examples/ethane.xyz")
-    linewidth = s.getLinearSize()
-    initscale = max(MolViewUI.window.get_size()) / linewidth / 3.0
-    MolViewUI.scale.set_value(initscale)
     gtk.main()
