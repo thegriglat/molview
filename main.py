@@ -16,6 +16,7 @@ class MolViewUI:
     def __init__(self):
         # Create the toplevel window
         window = gtk.Window()
+        self.window = window
         window.connect('destroy', lambda w: gtk.main_quit())
         window.set_size_request(800,600)
         vbox = gtk.VBox()
@@ -115,6 +116,7 @@ class MolViewUI:
 
         window.show_all()
         return
+
     def centralize(self, windget, event):
         s.centralize()
         self.drawingarea.queue_draw()
@@ -171,6 +173,13 @@ class MolViewUI:
         elif response == gtk.RESPONSE_CANCEL:
             print 'No files selected'
         dialog.destroy()
+        if Settings.settings['app']['autocentralize']:
+            s.centralize()
+        if Settings.settings['app']['autoscale']:
+          linewidth = s.getLinearSize()
+          initscale = max(self.window.get_size()) / linewidth / 4.0
+          self.scale.set_value(initscale)
+
         return True
 
     def cleanStructure(self, widget, event):
@@ -240,7 +249,10 @@ class MolViewUI:
 Settings = Settings("settings.yaml")
 
 if __name__ == '__main__':
-    MolViewUI()
+    MolViewUI = MolViewUI()
     s = Structure()
     s.read_from_file("examples/ethane.xyz")
+    linewidth = s.getLinearSize()
+    initscale = max(MolViewUI.window.get_size()) / linewidth / 3.0
+    MolViewUI.scale.set_value(initscale)
     gtk.main()

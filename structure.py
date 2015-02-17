@@ -8,6 +8,7 @@ class Structure:
     def __init__(self):
         self.atoms = []
         self.bonds = []
+
     def to2D(self, phi = 0, psi = 0, scale = 1.0):
         # sort by Z axis
         return sorted([a.to2D(phi, psi, scale) for a in self.atoms], key = lambda test: test[1][2])
@@ -37,6 +38,19 @@ class Structure:
             atom.xyz[0] -= coordmid[0]
             atom.xyz[1] -= coordmid[1]
             atom.xyz[2] -= coordmid[2]
+    
+    def getLinearSize(self):
+        maxlen = 0
+        for a1 in self.atoms:
+            for a2 in self.atoms:
+                if a1 == a2:
+                    continue
+                length = sqrt((a2.xyz[0] - a1.xyz[0]) ** 2 + 
+                              (a2.xyz[1] - a1.xyz[1]) ** 2 + 
+                              (a2.xyz[2] - a1.xyz[2]) ** 2)
+                if length > maxlen:
+                    maxlen = length
+        return maxlen 
 
 class Atom:
     def __init__(self):

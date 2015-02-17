@@ -1,3 +1,6 @@
+app:
+  autoscale: False
+  autocentralize: True
 atoms:
   C:
     radius: 0.77
