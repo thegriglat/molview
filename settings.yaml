@@ -2,9 +2,9 @@ atoms:
   C:
     radius: 0.77
     color:
-      red: 1
-      green: 1
-      blue: 0
+      red: 0.89
+      green: 0.82
+      blue: 0.4
   H:
     radius: 0.32
     color:
