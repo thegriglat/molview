@@ -8,9 +8,9 @@ class Structure:
     def __init__(self):
         self.atoms = []
         self.bonds = []
-    def to2D(self, phi = 0, psi = 0):
+    def to2D(self, phi = 0, psi = 0, scale = 1.0):
         # sort by Z axis
-        return sorted([a.to2D(phi, psi) for a in self.atoms], key = lambda test: test[1][2])
+        return sorted([a.to2D(phi, psi, scale) for a in self.atoms], key = lambda test: test[1][2])
         
     def read_from_file(self, filename, filetype = "xyz"):
         self.__init__()
@@ -32,7 +32,10 @@ class Atom:
         self.label = ""
         self.radius = 1.0
 
-    def to2D(self, phi = 0, psi = 0):
+    def getRadius(self, scale = 1.0):
+        return self.radius * scale
+    
+    def to2D(self, phi = 0, psi = 0, scale = 1.0):
         oldxyz = [[self.xyz[0]], [self.xyz[1]], [self.xyz[2]]]
         rotate1 = [
             [1,           0,        0],
@@ -45,7 +48,7 @@ class Atom:
             [sin(psi), 0,    cos(psi)]
                   ]
         xyz_new = matMul(matMul(rotate1, rotate2), oldxyz)
-        return (self.label, (xyz_new[0][0], xyz_new[1][0], xyz_new[2][0]), self.radius)
+        return (self.label, (scale * xyz_new[0][0], scale * xyz_new[1][0], scale * xyz_new[2][0]), self.getRadius(scale))
 
 def matMul(a, b):
     zip_b = zip(*b)

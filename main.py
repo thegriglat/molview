@@ -11,6 +11,8 @@ class MolViewUI:
     x, y = 0, 0      
     xoy = 0
     xoz = 0
+    scaleFactor = 1.0
+
     def __init__(self):
         # Create the toplevel window
         window = gtk.Window()
@@ -79,6 +81,8 @@ class MolViewUI:
                                            page_size = 1))
             
         self.scale = scale
+        scale.set_value(self.scaleFactor)
+        scale.connect('value-changed', self.scaleStructure, None, self.scaleFactor)
         vbox.pack_start(scale, False, False)
         vbox.pack_start(drawingarea)
         
@@ -178,7 +182,7 @@ class MolViewUI:
     def expose(self, widget, event):
         width  = widget.allocation.width
         height = widget.allocation.height
-        for (label, coord, radius) in s.to2D(self.xoy, self.xoz):
+        for (label, coord, radius) in s.to2D(self.xoy, self.xoz, self.scaleFactor):
             cr = widget.window.cairo_create()
             cr.translate(width / 2 ,height / 2)
             cr.arc(100 * coord[0],100 * coord[1], 5* radius, 0, 2 * math.pi)
@@ -221,6 +225,10 @@ class MolViewUI:
       label = gtk.Label("This program has GPLv3 license.\nSource code is hosted on\nhttps://github.com/thegriglat/molview")
       window.add(label)
       window.show_all()
+
+    def scaleStructure(self, widget, event, scale):
+      self.scaleFactor = float(widget.get_value())
+      self.drawingarea.queue_draw()
 
 
 Settings = Settings("settings.yaml")
