@@ -236,5 +236,5 @@ Settings = Settings("settings.yaml")
 if __name__ == '__main__':
     MolViewUI()
     s = Structure()
-    s.read_from_file("ethane.dat")
+    s.read_from_file("examples/ethane.xyz")
     gtk.main()
