@@ -103,8 +103,12 @@ class MolViewUI:
         menuopenbutton.connect("activate", self.openFileDialog, None)
         exportbutton = uimanager.get_widget("/MenuBar/File/Export")
         exportbutton.connect("activate", self.saveFileDialog, None)
+        helpbutton = uimanager.get_widget("/MenuBar/Help/About")
+        helpbutton.connect("activate", self.aboutWindow, None)
+
         window.show_all()
         return
+
     def saveFileDialog(self, widget, event):
         def exportAsPNG(drawable, filename):
             colormap = drawable.get_colormap()
@@ -210,6 +214,13 @@ class MolViewUI:
             state = event.state
         if state & gtk.gdk.BUTTON1_MASK:
             self.doRotate(widget, x, y)
+
+    def aboutWindow(self, widget, event):
+      window = gtk.Window()
+      window.set_size_request(350,100)
+      label = gtk.Label("This program has GPLv3 license.\nSource code is hosted on\nhttps://github.com/thegriglat/molview")
+      window.add(label)
+      window.show_all()
 
 
 Settings = Settings("settings.yaml")
