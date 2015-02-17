@@ -19,5 +19,7 @@
         <toolitem action="Down"/>
         <toolitem action="Right"/>
         <toolitem action="Left"/>
+      <separator/>
+        <toolitem action="Centralize"/>
     </toolbar>
 </ui>

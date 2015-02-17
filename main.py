@@ -45,6 +45,7 @@ class MolViewUI:
                                  ('Down' , gtk.STOCK_GO_DOWN, '_Down'),
                                  ('Right' , gtk.STOCK_GO_FORWARD, '_Right'),
                                  ('Left' , gtk.STOCK_GO_BACK, '_Left'),
+                                 ('Centralize' , gtk.STOCK_REFRESH, '_Centralize'),
                                  ('About', gtk.STOCK_HELP, '_About')])
         actiongroup.get_action('Quit').set_property('short-label', '_Quit')
 
@@ -109,9 +110,14 @@ class MolViewUI:
         exportbutton.connect("activate", self.saveFileDialog, None)
         helpbutton = uimanager.get_widget("/MenuBar/Help/About")
         helpbutton.connect("activate", self.aboutWindow, None)
+        centralizebutton = uimanager.get_widget("/Toolbar/Centralize")
+        centralizebutton.connect("clicked", self.centralize, None)
 
         window.show_all()
         return
+    def centralize(self, windget, event):
+        s.centralize()
+        self.drawingarea.queue_draw()
 
     def saveFileDialog(self, widget, event):
         def exportAsPNG(drawable, filename):

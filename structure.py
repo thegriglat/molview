@@ -25,6 +25,18 @@ class Structure:
                 a.radius = main.Settings.settings["atoms"][label]["radius"]
                 self.atoms.append(a)
                 del a
+    def centralize(self):
+        coordmid = [0, 0, 0]
+        for atom in self.atoms:
+            coordmid[0] += atom.xyz[0]
+            coordmid[1] += atom.xyz[1]
+            coordmid[2] += atom.xyz[2]
+        for i in xrange(3):
+            coordmid[i] /= float(len(self.atoms))
+        for atom in self.atoms:
+            atom.xyz[0] -= coordmid[0]
+            atom.xyz[1] -= coordmid[1]
+            atom.xyz[2] -= coordmid[2]
 
 class Atom:
     def __init__(self):
