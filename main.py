@@ -11,7 +11,7 @@ class MolViewUI:
     x, y = 0, 0      
     xoy = 0
     xoz = 0
-    scaleFactor = 1.0
+    scaleFactor = 20.0
 
     def __init__(self):
         # Create the toplevel window
@@ -75,7 +75,7 @@ class MolViewUI:
 
         scale = gtk.HScale(gtk.Adjustment(value = 1,
                                            lower = 0.1,
-                                           upper = 11,
+                                           upper = 101,
                                            step_incr = 0.1,
                                            page_incr = 0.1,
                                            page_size = 1))
@@ -185,7 +185,7 @@ class MolViewUI:
         for (label, coord, radius) in s.to2D(self.xoy, self.xoz, self.scaleFactor):
             cr = widget.window.cairo_create()
             cr.translate(width / 2 ,height / 2)
-            cr.arc(100 * coord[0],100 * coord[1], 5* radius, 0, 2 * math.pi)
+            cr.arc(coord[0], coord[1], radius, 0, 2 * math.pi)
             cr.set_source_rgb(Settings.settings["atoms"][label]["color"]["red"],
                               Settings.settings["atoms"][label]["color"]["green"],
                               Settings.settings["atoms"][label]["color"]["blue"]
