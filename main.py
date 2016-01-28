@@ -257,7 +257,7 @@ class MolViewUI:
       self.drawingarea.queue_draw()
 
 
-Settings = Settings("settings.yaml")
+Settings = Settings("settings.cfg")
 
 if __name__ == '__main__':
     MolViewUI = MolViewUI()
