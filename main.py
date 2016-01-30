@@ -249,7 +249,8 @@ class MolViewUI:
           del adj
       elif widget.get_value() < 0.1 * widget.get_adjustment().get_upper():
           adj = widget.get_adjustment()
-          adj.set_upper(adj.get_upper() * 0.9)
+          if adj.get_upper() - 1 > 0:
+            adj.set_upper(adj.get_upper() - 1 )
           widget.set_adjustment(adj)
           del adj
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import sys
 from math import *
 from settings import *
 import main
@@ -26,6 +27,7 @@ class Structure:
                 a.radius = main.Settings.settings["atoms"][label]["radius"]
                 self.atoms.append(a)
                 del a
+
     def centralize(self):
         coordmid = [0, 0, 0]
         for atom in self.atoms:
@@ -41,13 +43,18 @@ class Structure:
     
     def getLinearSize(self):
         maxlen = 0
+        maxiter = len(self.atoms) ** 2 - len(self.atoms)
+        idx = 0
         for a1 in self.atoms:
             for a2 in self.atoms:
                 if a1 == a2:
                     continue
+                idx += 1
                 length = sqrt((a2.xyz[0] - a1.xyz[0]) ** 2 + 
                               (a2.xyz[1] - a1.xyz[1]) ** 2 + 
                               (a2.xyz[2] - a1.xyz[2]) ** 2)
+                sys.stdout.write("Getting linear size: {0:2f}%\r".format(100.0 * idx / maxiter))
+                sys.stdout.flush()
                 if length > maxlen:
                     maxlen = length
         return maxlen 
